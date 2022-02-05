@@ -49,4 +49,20 @@ app.get('/:word/echo',function(req,res){
   })
 })
 
+app.get('/name',(req,res)=>{
+  firstname = req.query.first;
+  lastname = req.query.last;
+  res.json({
+    name: firstname +" "+ lastname
+  })
+})
+
+app.post('/name', (req,res)=>{
+  firstname = req.body.first;
+  lastname = req.body.last;
+  res.json({
+    name: firstname+" "+lastname
+  })
+})
+
 module.exports = app;
