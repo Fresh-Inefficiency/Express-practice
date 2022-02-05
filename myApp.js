@@ -1,13 +1,15 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 
+require('dotenv').config();
 console.log("Hello World");
 
 // app.get("/",function(req,res){
 //   res.send("Hello Express");
 // })
 app.use('/public',express.static(__dirname+'/public'));
-
+app.use('/name',bodyParser.urlencoded({extended:false}));
 
 app.use(function logger(req,res,next){
   console.log(req.method+" "+req.path+" - "+req.ip);
@@ -21,7 +23,7 @@ app.get('/',function(req,res){
 
 
 app.get('/json',(req,res)=>{
-  if (process.env['MESSAGE_STYLE']==="uppercase"){
+  if (process.env.MESSAGE_STYLE==="uppercase"){
     res.json({
       message: "Hello json".toUpperCase()
     });
@@ -47,12 +49,4 @@ app.get('/:word/echo',function(req,res){
   })
 })
 
-app.get('/name',(req,res)=>{
-  firstname = req.query.first;
-  lastname = req.query.last;
-  res.json({
-    name: firstname +" "+ lastname
-  })
-})
-
- module.exports = app;
+module.exports = app;
